@@ -4,15 +4,15 @@ from geometry_msgs.msg import Twist, Quaternion, Vector3
 from sensor_msgs.msg import Imu
 from wave_rover_serial import Robot
 import math
+import json
 
 class VehicleNode(Node):
     def __init__(self):
         super().__init__('vehicle_node')
-        
-        # Initialize connection to the vehicle
-        self.rover = Robot('/dev/ttyUSB0')
-        self.rover.connect()
-        
+
+        self.declare_parameter('timer_period', 1)
+        # self.declare_parameter('frame_id', "laser_frame")
+
         # Subscribe to the /cmd_vel topic to receive velocity commands
         self.cmd_vel_subscription = self.create_subscription(
             Twist,
@@ -26,8 +26,14 @@ class VehicleNode(Node):
             '/imu',
             10)
         
-        timer_period = 0.5  # seconds
+        timer_period = self.get_parameter('timer_period').get_parameter_value().double_value
+        # self.frame_id = self.get_parameter('frame_id').get_parameter_value().string_value
+
         self.timer = self.create_timer(timer_period, self.timer_callback)
+
+        # Initialize connection to the vehicle
+        self.rover = Robot('/dev/ttyUSB0')
+        self.rover.connect()
 
     def timer_callback(self):
         self.publish_imu_data()
@@ -55,43 +61,59 @@ class VehicleNode(Node):
         """
         Publishes the imu data to a the /imu_data topic
         """
+
+        # Initialize the Robot with the appropriate serial port and baud rate
+        # with Robot('/dev/ttyUSB0') as robot:
+        #     # Send a command to set motor speeds
+        #     # robot.speed_input(left_speed=100, right_speed=100)
+
+        #     # Send a command to get the IMU information and read the response
+        #     imu_data = robot.imu_info()
+            # print(data)
         # Get IMU data from the vehicle
         imu_data = self.rover.imu_info()
 
-        self.get_logger().info(imu_data)
+        if imu_data == "Read timeout":
+            imu_data = json.loads(imu_data)
+    
         
         # Create an Imu message
         imu_msg = Imu()
         
-        # Populate header (timestamp)
-        imu_msg.header.stamp = self.get_clock().now().to_msg()
+        # # Populate header (timestamp)
+        # # imu_msg.header.frame_id = self.frame_id
+        # imu_msg.header.stamp = self.get_clock().now().to_msg()py
         
-        # Populate orientation (quaternion)
-        quaternion = self.quaternion_from_rpy(math.radians(imu_data['roll']),
-                                              math.radians(imu_data['pitch']),
-                                              math.radians(imu_data['yaw']))
-        imu_msg.orientation = Quaternion(*quaternion)
+        # # Populate orientation (quaternion)
+        # quaternion = self.quaternion_from_rpy(math.radians(imu_data['roll']),
+        #                                       math.radians(imu_data['pitch']),
+        #                                       math.radians(imu_data['yaw']))
+        # imu_msg.orientation.x = quaternion[0]
+        # imu_msg.orientation.y = quaternion[1]
+        # imu_msg.orientation.z = quaternion[2]
+        # imu_msg.orientation.w = quaternion[3]
+
         
-        # Populate orientation covariance
-        imu_msg.orientation_covariance = [0.0] * 9  # Assuming no covariance for orientation
+        # # Populate orientation covariance
+        # imu_msg.orientation_covariance = [0.0] * 9  # Assuming no covariance for orientation
         
-        # Populate angular velocity
-        imu_msg.angular_velocity = Vector3()
-        imu_msg.angular_velocity.x = imu_data['gyro_X']
-        imu_msg.angular_velocity.y = imu_data['gyro_Y']
-        imu_msg.angular_velocity.z = imu_data['gyro_Z']
+        # # Populate angular velocity
+        # # imu_msg.angular_velocity = Vector3()
+        # imu_msg.angular_velocity.x = float(imu_data['gyro_X'])
+        # imu_msg.angular_velocity.y = float(imu_data['gyro_Y'])
+        # imu_msg.angular_velocity.z = float(imu_data['gyro_Z'])
         
-        # Populate angular velocity covariance
-        imu_msg.angular_velocity_covariance = [0.0] * 9  # Assuming no covariance for angular velocity
+        # # Populate angular velocity covariance
+        # imu_msg.angular_velocity_covariance = [0.0] * 9  # Assuming no covariance for angular velocity
         
-        # Populate linear acceleration
-        imu_msg.linear_acceleration = Vector3()
-        imu_msg.linear_acceleration.x = imu_data['acce_X']
-        imu_msg.linear_acceleration.y = imu_data['acce_Y']
-        imu_msg.linear_acceleration.z = imu_data['acce_Z']
+        # # Populate linear acceleration
+        # # imu_msg.linear_acceleration = Vector3()
+        # imu_msg.linear_acceleration.x = float(imu_data['acce_X'])
+        # imu_msg.linear_acceleration.y = float(imu_data['acce_Y'])
+        # imu_msg.linear_acceleration.z = float(imu_data['acce_Z'])
         
-        # Populate linear acceleration covariance
-        imu_msg.linear_acceleration_covariance = [0.0] * 9  # Assuming no covariance for linear acceleration
+        # # Populate linear acceleration covariance
+        # imu_msg.linear_acceleration_covariance = [0.0] * 9  # Assuming no covariance for linear acceleration
         
         # Publish IMU message
         self.imu_data_publisher.publish(imu_msg)
@@ -129,7 +151,7 @@ def main(args=None):
     
     vehicle_node.disconnect()
     vehicle_node.destroy_node()
-    rclpy.shutdown()
+    # rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
