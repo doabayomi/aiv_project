@@ -31,7 +31,7 @@ class VehicleNode(Node):
 
     def timer_callback(self):
         self.publish_imu_data()
-        
+
     def cmd_vel_callback(self, msg: Twist):
         """
         Process velocity commands received from /cmd_vel topic
@@ -57,6 +57,8 @@ class VehicleNode(Node):
         """
         # Get IMU data from the vehicle
         imu_data = self.rover.imu_info()
+
+        self.get_logger().info(imu_data)
         
         # Create an Imu message
         imu_msg = Imu()
