@@ -43,7 +43,7 @@ def generate_launch_description():
         {'product_name': 'LDLiDAR_LD19'},
         {'topic_name': 'scan'},
         {'port_name': '/dev/ttyUSB0'},
-        {'frame_id': 'base_laser'},
+        {'frame_id': 'laser_frame'},
         {'laser_scan_dir': True},
         {'enable_angle_crop_func': False},
         {'angle_crop_min': 135.0},
@@ -56,7 +56,7 @@ def generate_launch_description():
     package='tf2_ros',
     executable='static_transform_publisher',
     name='base_link_to_base_laser_ld19',
-    arguments=['0','0','0.18','0','0','0','base_link','base_laser']
+    arguments=['0','0','0.18','0','0','0','base_link','laser_frame']
   )
 
 

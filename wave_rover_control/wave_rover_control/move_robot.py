@@ -10,7 +10,7 @@ class VehicleNode(Node):
         super().__init__('vehicle_node')
         
         # Initialize connection to the vehicle
-        self.rover = Robot('COM9')
+        self.rover = Robot('/dev/ttyUSB0')
         self.rover.connect()
         
         # Subscribe to the /cmd_vel topic to receive velocity commands
