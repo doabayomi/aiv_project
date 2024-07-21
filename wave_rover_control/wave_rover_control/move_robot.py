@@ -25,7 +25,13 @@ class VehicleNode(Node):
             Imu,
             '/imu',
             10)
-    
+        
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+
+    def timer_callback(self):
+        self.publish_imu_data()
+        
     def cmd_vel_callback(self, msg: Twist):
         """
         Process velocity commands received from /cmd_vel topic
@@ -43,6 +49,7 @@ class VehicleNode(Node):
         right_speed = max(min(right_speed, 255), -255)
 
         self.rover.speed_input(left_speed, right_speed)
+        
     
     def publish_imu_data(self):
         """
