@@ -85,7 +85,7 @@ class VehicleNode(Node):
 
             self.publish_imu_data(imu_data)
         except:
-            self.get_logger.info(imu_data)
+            self.get_logger().info(imu_data)
 
     def cmd_vel_callback(self, msg: Twist):
         """
