@@ -33,13 +33,13 @@ def generate_launch_description():
         ]
     )
 
-    # base_link to base_laser tf node
-    base_link_to_laser_tf_node = Node(
-    package='tf2_ros',
-    executable='static_transform_publisher',
-    name='base_link_to_base_laser_ld19',
-    arguments=['0','-0.03','0.056','0','0','-${pi}','base_link','laser_frame']
-    )
+    # # base_link to base_laser tf node
+    # base_link_to_laser_tf_node = Node(
+    # package='tf2_ros',
+    # executable='static_transform_publisher',
+    # name='base_link_to_base_laser_ld19',
+    # arguments=['0','-0.03','0.056','0','0','-${pi}','base_link','laser_frame']
+    # )
 
 
     # Define LaunchDescription variable
@@ -60,6 +60,6 @@ def generate_launch_description():
 
     ld.add_action(rover_node)
     ld.add_action(ldlidar_node)
-    ld.add_action(base_link_to_laser_tf_node)
+    # ld.add_action(base_link_to_laser_tf_node)
 
     return ld

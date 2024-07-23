@@ -85,7 +85,7 @@ class VehicleNode(Node):
 
             self.publish_imu_data(imu_data)
         except:
-            self.get_logger().info(imu_data)
+            self.get_logger().info(str(imu_data))
 
     def cmd_vel_callback(self, msg: Twist):
         """
@@ -127,7 +127,7 @@ class VehicleNode(Node):
         
         # Populate orientation (quaternion)
         quaternion = self.quaternion_from_rpy(math.radians(imu_data['roll']),
-                                              math.radians(imu_data['pitch']),
+                                               math.radians(imu_data['pitch']),
                                               math.radians(imu_data['yaw']))
         imu_msg.orientation.x = quaternion[0]
         imu_msg.orientation.y = quaternion[1]
