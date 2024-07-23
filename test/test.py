@@ -6,5 +6,6 @@ with Robot('/dev/ttyUSB0') as robot:
     # robot.speed_input(left_speed=100, right_speed=100)
 
     # Send a command to get the IMU information and read the response
-    data = robot.imu_info()
+    # data = robot.imu_info()
+    data = robot.oled_set(1, "Hello World")
     print(data)

@@ -6,7 +6,7 @@ from launch_ros.actions import Node
 parameters=[
         {'product_name': 'LDLiDAR_LD19'},
         {'topic_name': 'scan'},
-        {'port_name': '/dev/ttyUSB0'},
+        {'port_name': '/dev/ttyAMA0'},
         {'frame_id': 'base_laser'},
         {'laser_scan_dir': True},
         {'enable_angle_crop_func': False},
