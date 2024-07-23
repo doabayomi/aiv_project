@@ -1,28 +1,6 @@
 <?xml version="1.0"?>
 <robot name="wave_rover" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- Base Link -->
-  <!-- <link name="base_link">
-    <visual>
-      <geometry>
-        <mesh filename="file:$(find wave_rover_control)/meshes/base_link.stl"/>
-      </geometry>
-      <material name="BlackMetal">
-        <color rgba="0 0 0 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <mesh filename="file:$(find wave_rover_control)/meshes/base_link.stl"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="1.0"/>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
-    </inertial>
-  </link> -->
-
   <link name="base_link">
     <inertial>
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
@@ -39,45 +17,47 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.0250" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="file://$(find wave_rover_control)/meshes/robot.stl" scale="0.001 0.001 0.001"/>
+        <box size="0.136 0.183 0.0548"/>
       </geometry>
     </collision>
   </link>
 
-  <!-- <joint name="base_footprint_joint" type="fixed">
+  <joint name="base_footprint_joint" type="fixed">
     <parent link="base_footprint"/>
     <child link="base_link"/>
-    <origin xyz="0 0 0" rpy="0 0 ${-pi}"/>
+    <origin xyz="0 0 0.0337" rpy="0 0 0"/>
   </joint>
-  
-  <link name = "base_footprint">
-  
-  </link> -->
+
+  <link name="base_footprint">
+
+  </link>
 
   <joint name = "laser_joint" type = "fixed">
     <parent link = "base_link"/>
     <child link = "laser_frame"/>
-    <origin xyz="0 0 0.053" rpy="0 0 0"/>
-</joint>
+    <origin xyz="0 -0.03 0.056" rpy="0 0 -${pi}"/>
+  </joint>
 
-<link name = "laser_frame">
-  <visual>
-      <geometry>
-          <cylinder length="0.02" radius="0.03" />
-      </geometry>
-      <material name="red"/>
-  </visual>
-  <collision>
-      <geometry>
-          <cylinder length="0.02" radius="0.03" />
-      </geometry>
-  </collision>
-  <!-- <xacro:inertial_cylinder mass="0.1" length="0.05" radius="0.05">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-  </xacro:inertial_cylinder> -->
-</link>
+  <link name = "laser_frame">
+    <visual>
+        <geometry>
+            <mesh filename="file://$(find wave_rover_control)/meshes/LD19.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="black"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0.018" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.04629 0.054 0.0348"/>
+            <!-- <mesh filename="file://$(find wave_rover_control)/meshes/LD19.stl" scale="0.001 0.001 0.001"/> -->
+        </geometry>
+    </collision>
+    <!-- <xacro:inertial_cylinder mass="0.1" length="0.05" radius="0.05">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:inertial_cylinder> -->
+  </link>
 
 
 </robot>
