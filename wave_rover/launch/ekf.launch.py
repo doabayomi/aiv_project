@@ -12,12 +12,19 @@ def generate_launch_description():
     package_name='wave_rover' #<--- CHANGE ME
     share_dir = get_package_share_directory(package_name)
 
-    pub_tranform = LaunchConfiguration('publish_transform')
-
-
     lidar_odom_node = Node(
-        package="lidar_odometry",
-        executable="lidar_odometry_node"
+        package='rf2o_laser_odometry',
+        executable='rf2o_laser_odometry_node',
+        name='rf2o_laser_odometry',
+        output='screen',
+        parameters=[{
+            'laser_scan_topic' : '/scan',
+            'odom_topic' : '/odom_rf2o',
+            'publish_tf' : False,
+            'base_frame_id' : 'base_footprint',
+            'odom_frame_id' : 'odom',
+            'init_pose_from_topic' : '',
+            'freq' : 5.0}],
     )
 
     ekf_node = Node(
