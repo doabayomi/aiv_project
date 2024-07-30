@@ -140,18 +140,18 @@ class VehicleNode(Node):
         
         # Populate angular velocity
         # imu_msg.angular_velocity = Vector3()
-        imu_msg.angular_velocity.x = float(imu_data['gyro_X'])
-        imu_msg.angular_velocity.y = float(imu_data['gyro_Y'])
-        imu_msg.angular_velocity.z = float(imu_data['gyro_Z'])
+        imu_msg.angular_velocity.x = self.convert_gyro(float(imu_data['gyro_X']))
+        imu_msg.angular_velocity.y = self.convert_gyro(float(imu_data['gyro_Y']))
+        imu_msg.angular_velocity.z = self.convert_gyro(float(imu_data['gyro_Z']))
         
         # Populate angular velocity covariance
         imu_msg.angular_velocity_covariance = [0.0] * 9  # Assuming no covariance for angular velocity
         
         # Populate linear acceleration
         # imu_msg.linear_acceleration = Vector3()
-        imu_msg.linear_acceleration.x = float(imu_data['acce_X'])
-        imu_msg.linear_acceleration.y = float(imu_data['acce_Y'])
-        imu_msg.linear_acceleration.z = float(imu_data['acce_Z'])
+        imu_msg.linear_acceleration.x = self.convert_accelerometer(float(imu_data['acce_X']))
+        imu_msg.linear_acceleration.y = self.convert_accelerometer(float(imu_data['acce_Y']))
+        imu_msg.linear_acceleration.z = self.convert_accelerometer(float(imu_data['acce_Z']))
         
         # Populate linear acceleration covariance
         imu_msg.linear_acceleration_covariance = [0.0] * 9  # Assuming no covariance for linear acceleration
@@ -175,6 +175,41 @@ class VehicleNode(Node):
         self.mag_publisher.publish(Mag)
         self.imu_data_publisher.publish(imu_msg)
         self.temp_publisher.publish(Temp_msg)
+
+    def convert_accelerometer(self, value, scale = 16,):
+        # Sensitivity scale factors for the accelerometer (LSB/g)
+        accel_sensitivity = {
+            2: 16384,
+            4: 8192,
+            8: 4096,
+            16: 2048
+        }
+
+        g_to_m_s2 = 9.81  # Conversion factor from g to m/s²
+
+        return self.convert_reading(accel_sensitivity, scale, value) * g_to_m_s2
+    
+    def convert_gyro(self, value, scale = 2048,):
+        # Sensitivity scale factors for the accelerometer (LSB/g)
+        gyro_sensitivity = {
+            16: 2048,
+            32: 1024,
+            64: 512,
+            128: 256,
+            256: 128,
+            512: 64,
+            1024: 32,
+            2048: 16
+        }
+
+        dps_to_rad_s = 0.0174533  # Conversion factor from degrees per second to radians per second
+
+        return self.convert_reading(gyro_sensitivity, scale, value) * dps_to_rad_s
+      
+    @staticmethod
+    def convert_reading(mapping, scale, value):
+        sensitivity = mapping[scale]
+        return value/sensitivity
     
     def quaternion_from_rpy(self, roll, pitch, yaw):
         """
