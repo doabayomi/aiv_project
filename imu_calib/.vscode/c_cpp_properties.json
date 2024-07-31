@@ -1,0 +1,29 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/opt/ros/humble/include/**",
+        "/home/lolade/Robotics/ros2_ws/install/wave_rover_interfaces/include/**",
+        "/home/lolade/Robotics/ros2_ws/install/serial/include/**",
+        "/home/lolade/Robotics/ros2_ws/install/diffdrive_arduino/include/**",
+        "/home/lolade/Robotics/ros2_ws/src/Simple-2D-LiDAR-Odometry/include/**",
+        "/home/lolade/Robotics/ros2_ws/src/aiv_project/ldlidar_stl_ros2/ldlidar_stl_ros2/include/**",
+        "/home/lolade/Robotics/ros2_ws/src/alphabot/include/**",
+        "/home/lolade/Robotics/ros2_ws/src/betabot/include/**",
+        "/home/lolade/Robotics/ros2_ws/src/imu_calib/include/**",
+        "/home/lolade/Robotics/ros2_ws/src/serial/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

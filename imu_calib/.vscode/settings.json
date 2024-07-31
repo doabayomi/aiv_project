@@ -1,0 +1,20 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages",
+        "/home/lolade/Robotics/ros2_ws/install/wave_rover_interfaces/local/lib/python3.10/dist-packages",
+        "/home/lolade/Robotics/ros2_ws/install/wave_rover_control/lib/python3.10/site-packages",
+        "/home/lolade/Robotics/ros2_ws/install/ros2_vlm/lib/python3.10/site-packages",
+        "/home/lolade/Robotics/ros2_ws/install/no_cam_bot/lib/python3.10/site-packages",
+        "/home/lolade/Robotics/ros2_ws/install/joy_tester/lib/python3.10/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages",
+        "/home/lolade/Robotics/ros2_ws/install/wave_rover_interfaces/local/lib/python3.10/dist-packages",
+        "/home/lolade/Robotics/ros2_ws/install/wave_rover_control/lib/python3.10/site-packages",
+        "/home/lolade/Robotics/ros2_ws/install/ros2_vlm/lib/python3.10/site-packages",
+        "/home/lolade/Robotics/ros2_ws/install/no_cam_bot/lib/python3.10/site-packages",
+        "/home/lolade/Robotics/ros2_ws/install/joy_tester/lib/python3.10/site-packages"
+    ]
+}
