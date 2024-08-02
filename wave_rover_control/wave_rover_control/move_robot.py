@@ -92,8 +92,8 @@ class VehicleNode(Node):
         Process velocity commands received from /cmd_vel topic
         """
         # Convert Twist message to JSON format compatible with wave_rover_serial
-        linear_velocity = msg.linear.x
-        angular_velocity = msg.angular.z
+        linear_velocity = msg.linear.x * 4
+        angular_velocity = msg.angular.z * 20
 
         wheelbase = 0.136 # in meters
         left_speed = linear_velocity - angular_velocity * wheelbase/2
