@@ -25,11 +25,11 @@ def generate_launch_description():
         )])
     )
 
-    launch_joystick = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(
-            share_dir,'launch','joystick.launch.py'
-        )])
-    )
+    # launch_joystick = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([os.path.join(
+    #         share_dir,'launch','joystick.launch.py'
+    #     )])
+    # )
 
     twist_mux_params = os.path.join(share_dir,'params','twist_mux.yaml')
     twist_mux = Node(package="twist_mux",
@@ -43,6 +43,6 @@ def generate_launch_description():
     return LaunchDescription([
         launch_imu,
         launch_ekf,
-        launch_joystick,
+        # launch_joystick,
         twist_mux
     ])
