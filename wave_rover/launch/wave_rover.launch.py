@@ -35,8 +35,16 @@ def generate_launch_description():
 
     ldlidar_node = Node(
         package="ld19_lidar",
-        executable="lidar.launch.py"
+        executable="ld19_node",
+        name="ld19_node",
+        output="screen",
+        parameters=[
+            {"port": ldr_port},
+            {"frame_id": "laser_frame"},
+            {"topic_name": "scan"},
+        ],
     )
+
 
     # # base_link to base_laser tf node
     # base_link_to_laser_tf_node = Node(
