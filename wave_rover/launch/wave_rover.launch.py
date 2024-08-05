@@ -16,21 +16,26 @@ def generate_launch_description():
     )
 
     # LDROBOT LiDAR publisher node
+    # ldlidar_node = Node(
+    #     package='ldlidar_stl_ros2',
+    #     executable='ldlidar_stl_ros2_node',
+    #     name='LD19',
+    #     output='screen',
+    #     parameters=[
+    #     {'product_name': 'LDLiDAR_LD19'},
+    #     {'topic_name': 'scan'},
+    #     {'port_name': ldr_port},
+    #     {'frame_id': 'laser_frame'},
+    #     {'laser_scan_dir': True},
+    #     {'enable_angle_crop_func': False},
+    #     {'angle_crop_min': 135.0},
+    #     {'angle_crop_max': 225.0}
+    #     ]
+    # )
+
     ldlidar_node = Node(
-        package='ldlidar_stl_ros2',
-        executable='ldlidar_stl_ros2_node',
-        name='LD19',
-        output='screen',
-        parameters=[
-        {'product_name': 'LDLiDAR_LD19'},
-        {'topic_name': 'scan'},
-        {'port_name': ldr_port},
-        {'frame_id': 'laser_frame'},
-        {'laser_scan_dir': True},
-        {'enable_angle_crop_func': False},
-        {'angle_crop_min': 135.0},
-        {'angle_crop_max': 225.0}
-        ]
+        package="ld19_lidar",
+        executable="lidar.launch.py"
     )
 
     # # base_link to base_laser tf node
