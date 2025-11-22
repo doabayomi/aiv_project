@@ -8,7 +8,7 @@ The project implements **LiDAR-based Simultaneous Localization and Mapping (SLAM
 ---
 
 ## 🤖 System Overview
-
+![20251122_225224](https://github.com/user-attachments/assets/070df22d-4683-40e2-b529-52b47127b9df)
 The system is built upon the **Waveshare WAVE ROVER** chassis, utilizing a **Raspberry Pi 4B** as the central processing unit. It bridges high-level path planning with low-level motor control via a custom serial interface to an ESP32 driver board.
 
 ### Key Features
