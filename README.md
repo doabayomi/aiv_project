@@ -3,7 +3,7 @@
 
 This repository contains the source code and ROS 2 configuration for the **Design and Implementation of an Autonomous Indoor Vehicle**, developed as a final year undergraduate thesis.
 
-The project implements **LiDAR-based Simultaneous Localization and Mapping (SLAM)** and **Frontier Exploration** on a differential-drive mobile robot. It features a custom navigation stack built on **ROS 2 Humble**, capable of mapping unstructured indoor environments with high precision.
+The project implements **LiDAR-based Simultaneous Localization and Mapping (SLAM)** and **Frontier Exploration** on a differential-drive mobile robot. It features a custom navigation stack built on **ROS 2 Humble**, capable of mapping indoor environments.
 
 ---
 
@@ -13,9 +13,9 @@ The system is built upon the **Waveshare WAVE ROVER** chassis, utilizing a **Ras
 
 ### Key Features
 * **LiDAR-Based SLAM:** Real-time 2D mapping and localization using the `slam_toolbox` and **LD19 ToF LiDAR**.
-* **Frontier Exploration:** Autonomous navigation of unknown environments by identifying and pursuing map frontiers.
+* **Frontier Exploration:** Autonomous navigation of unknown map frontiers to complete mapping of an environment.
 * **Custom Hardware Interface:** A Python-based ROS 2 hardware abstraction layer converting `geometry_msgs/Twist` commands into serial packets for the Waveshare chassis.
-* **Sensor Fusion:** Integration of LiDAR and IMU data for robust odometry in cluttered spaces.
+* **Sensor Integration:** Fusion of LiDAR and IMU data for robust odometry.
 
 ---
 
@@ -29,9 +29,9 @@ The system is built upon the **Waveshare WAVE ROVER** chassis, utilizing a **Ras
 
 ---
 
-## 📊 Research Findings & Benchmarks
+## 📊 Research Findings \& Benchmarks
 
-As part of the thesis, this platform was used to benchmark SLAM performance using a novel **"Clutter Index"** to quantify environmental complexity.
+As part of the thesis, this platform was used to **benchmark and analyze** SLAM performance across varying indoor conditions using a novel **"Clutter Index"** to quantify environmental complexity. The primary contribution was the *documentation* of performance degradation rather than a coded solution for it.
 
 * **Trajectory Accuracy (RMSE):** 8.24 cm.
 * **Localization Accuracy:** $\sim$10 cm relative to ground truth.
@@ -40,7 +40,7 @@ As part of the thesis, this platform was used to benchmark SLAM performance usin
 
 ---
 
-## 📦 Dependencies & Setup
+## 📦 Dependencies \& Setup
 
 ### Prerequisites
 * **OS:** Ubuntu 22.04 LTS.
@@ -60,18 +60,27 @@ colcon build --symlink-install
 
 ## 🚀 Usage
 
-*(It is recommended to add specific commands here, such as:)*
+This stack supports three primary operational modes via the `wave_rover` package:
 
-**1. Launch the SLAM Node (Mapping Mode)**
+**1. System Initialization (Driver & Sensor Launch)**
+This launches the LD19 LiDAR driver, IMU node, and the custom serial driver node for the Waveshare chassis.
 
 ```bash
-ros2 launch aiv_navigation slam.launch.py
+ros2 launch wave_rover wave_rover
 ```
 
-**2. Start Autonomous Frontier Exploration**
+**2. Manual Control (Teleoperation)**
+After initialization, use a keyboard or game controller to manually teleoperate the vehicle for mapping or debugging.
 
 ```bash
-ros2 launch frontier_exploration explore.launch.py
+ros2 run teleop_twist_keyboard teleop_twist_keyboard # (Standard ROS2 teleop node)
+```
+
+**3. Autonomous Frontier Exploration**
+Starts the SLAM process and launches the autonomous exploration behavior, directing the robot toward unknown frontiers.
+
+```bash
+ros2 launch wave_rover frontier_exploration# (Assuming this is the launch file name)
 ```
 
 -----
@@ -80,5 +89,3 @@ ros2 launch frontier_exploration explore.launch.py
 
 **Daniel Abayomi & Richard Okpara**
 *B.Eng Mechatronics Engineering*
-
-```
